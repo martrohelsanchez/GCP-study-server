@@ -1,17 +1,23 @@
 steps:
-  - name: node
-    entrypoint: npm 
-    args: ['install']
+    - name: node
+      entrypoint: npm
+      args: ["install"]
+      id: install
 
-  - name: node
-    entrypoint: npm 
-    args: ['run', 'build']
+    - name: node
+      entrypoint: npm
+      args: ["run", "build"]
+      id: build
+      waitfor: ["install"]
 
-  - name: node
-    entrypoint: npm 
-    args: ['run', 'start']
+    - name: node
+      entrypoint: npm
+      args: ["run", "start"]
+      id: start
+      waitfor: ["build"]
 
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['app', 'deploy']
+    - name: "gcr.io/cloud-builders/gcloud"
+      args: ["app", "deploy"]
+      waitfor: ["start"]
 
 timeout: 1200s
