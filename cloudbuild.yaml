@@ -8,16 +8,16 @@ steps:
       entrypoint: npm
       args: ["run", "build"]
       id: build
-      waitfor: ["install"]
+      waitFor: ["install"]
 
     - name: node
       entrypoint: npm
       args: ["run", "start"]
       id: start
-      waitfor: ["build"]
+      waitFor: ["build"]
 
     - name: "gcr.io/cloud-builders/gcloud"
       args: ["app", "deploy"]
-      waitfor: ["start"]
+      waitFor: ["start"]
 
 timeout: 1200s
