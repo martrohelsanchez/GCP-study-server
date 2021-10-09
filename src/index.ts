@@ -4,7 +4,7 @@ import cors from "cors";
 
 import { socketConnect } from "./socket";
 
-import router from "./routes";
+import routes from "./routes";
 
 const app = express();
 const httpServer = createServer(app);
@@ -15,10 +15,7 @@ app.use(cors());
 
 app.use("/static", express.static("src/images"));
 
-app.use("/", (req, res) => {
-    io.to("mart").emit("hello", "hoysdfa");
-    return res.status(200).send("<p>eyyy</p>");
-});
+app.use("/", routes);
 
 const port = process.env.PORT || 5000;
 
